@@ -9,6 +9,7 @@ from pathlib import Path
 from flask import Flask, render_template, request, jsonify
 from ledcontrol.animationcontroller import AnimationController
 from ledcontrol.ledcontroller import LEDController
+from ledcontrol.previewgenerator import generate_preview
 
 import ledcontrol.pixelmappings as pixelmappings
 import ledcontrol.animationpatterns as animpatterns
@@ -58,6 +59,8 @@ def create_app(led_count,
                          led_data_rate,
                          led_dma_channel,
                          led_pixel_order)
+    if preview_mode:
+        leds = None
     controller = AnimationController(leds,
                                      refresh_rate,
                                      led_count,
@@ -134,6 +137,9 @@ def create_app(led_count,
     if enable_sacn:
         form.append(FormItem('select', 'sacn', int,
                              options=['Off', 'On'], label='E1.31 sACN Receiver Mode'))
+
+    if preview_mode:
+        form.append(FormItem('preview'))
 
     @app.route('/')
     def index():
@@ -239,6 +245,15 @@ def create_app(led_count,
         'Resets animation timer'
         controller.reset_timer()
         return jsonify(result='')
+
+    @app.route('/preview.gif')
+    def get_preview():
+        'Returns a preview gif of the current settings'
+        try:
+            path, filename = generate_preview(controller.params)
+            return send_from_directory(path, filename, as_attachment=False)
+        except FileNotFoundError:
+            abort(404)
 
     def save_current_pattern_params():
         'Remembers speed and scale for current pattern'

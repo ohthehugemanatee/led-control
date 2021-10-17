@@ -112,6 +112,10 @@
         <div id="color-picker-container">
         </div>
       </div>
+      {% elif input.control == 'preview' %}
+      <div id="preview-container">
+        <img src="/preview.gif" style="max-width: 100%;" width="800">
+      </div>
       {% endif %}
       {% endfor %}
     </main>
