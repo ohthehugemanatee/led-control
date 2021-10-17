@@ -39,6 +39,8 @@ function handleInputChange(elem) {
     else elems.show();
   }
 
+  // Generally always update the preview.
+  reloadPreview()
   return { key: key, value: val };
 }
 
@@ -49,7 +51,18 @@ function handleParamAdjust() {
 
 // When a slider is dropped or a number input is changed, set params
 function handleParamUpdate() {
-  $.getJSON('/setparam', handleInputChange($(this)), () => {});
+  $.getJSON('/setparam', handleInputChange($(this)), () => { });
+}
+
+// Reload the preview image, adding a dummy query tag to avoid browser caching.
+function reloadPreview() {
+  var img = $('#preview');
+  var src = img.attr('src');
+  var i = src.indexOf('?dummy=');
+  src = i != -1 ? src.substring(0, i) : src;
+
+  var d = new Date();
+  img.attr('src', src + '?dummy=' + d.getTime());
 }
 
 // Create copy of current pattern
