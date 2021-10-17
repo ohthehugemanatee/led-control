@@ -140,7 +140,7 @@ def create_app(led_count,
                              options=['Off', 'On'], label='E1.31 sACN Receiver Mode'))
 
     if preview_mode:
-        form.append(FormItem('preview'))
+        form.append(FormItem('preview', 'preview'))
 
     @app.route('/')
     def index():
