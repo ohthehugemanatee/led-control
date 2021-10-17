@@ -6,7 +6,7 @@ import atexit
 from dataclasses import dataclass, field
 from threading import Timer
 from pathlib import Path
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory, abort
 from ledcontrol.animationcontroller import AnimationController
 from ledcontrol.ledcontroller import LEDController
 from ledcontrol.previewgenerator import generate_preview
@@ -42,9 +42,9 @@ def create_app(led_count,
                led_v_limit,
                save_interval,
                enable_sacn,
-               no_timer_reset):
+               no_timer_reset,
+               preview_mode):
     app = Flask(__name__)
-
     # Create pixel mapping function
     if pixel_mapping is not None:
         print(f'Using pixel mapping from file ({len(pixel_mapping)} LEDs)')
@@ -54,13 +54,14 @@ def create_app(led_count,
         print(f'Using default linear pixel mapping ({led_count} LEDs)')
         mapping_func = pixelmappings.line(led_count)
 
-    leds = LEDController(led_count,
-                         led_pin,
-                         led_data_rate,
-                         led_dma_channel,
-                         led_pixel_order)
-    if preview_mode:
-        leds = None
+    leds = None
+
+    if preview_mode == False:
+        leds = LEDController(led_count,
+                             led_pin,
+                             led_data_rate,
+                             led_dma_channel,
+                             led_pixel_order)
     controller = AnimationController(leds,
                                      refresh_rate,
                                      led_count,

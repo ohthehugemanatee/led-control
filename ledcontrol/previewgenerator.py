@@ -12,13 +12,13 @@ import ledcontrol.utils as utils
 def generate_preview(params):
     controller = AnimationController(None, 0, 256, pixelmappings.line(256), (0, 0, 0), False, True)
 
-    s = params['s']
-    t = params['t'] # Time units
+    s = 100 # LED strip length
+    t = 400 # Time units
     gif_t = 300 # Animated gif duration
 
-    source = animpatterns.default[params['primary_pattern']]
+    source_pattern = animpatterns.default[params['primary_pattern']]
 
-    errors, warnings, pattern = controller.compile_pattern(source)
+    errors, warnings, pattern = controller.compile_pattern(source_pattern['source'])
 
     img = Image.new('RGB', (t, s), 'black')
     pixels = img.load()
@@ -46,8 +46,7 @@ def generate_preview(params):
             frames.append(frame)
 
     ftmp = NamedTemporaryFile()
-    gif_name = ftmp.name + ".gif"
+    ftmp.name = ftmp.name + '.gif'
     file_path, filename = path.split(ftmp.name)
-
-    frames[0].save(gif_name, save_all=True, append_images=frames[1:], duration=100, loop=0)
+    frames[0].save(ftmp.name, save_all=True, append_images=frames[1:], duration=100, loop=0)
     return file_path, filename
