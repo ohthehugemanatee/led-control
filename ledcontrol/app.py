@@ -54,7 +54,7 @@ def create_app(led_count,
         print(f'Using default linear pixel mapping ({led_count} LEDs)')
         mapping_func = pixelmappings.line(led_count)
 
-    leds = None
+    leds = DummyLEDController()
 
     if not preview_mode:
         leds = LEDController(led_count,
