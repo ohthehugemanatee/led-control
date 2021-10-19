@@ -8,6 +8,7 @@ from threading import Timer
 from pathlib import Path
 from flask import Flask, render_template, request, jsonify, send_from_directory, abort
 from ledcontrol.animationcontroller import AnimationController
+from ledcontrol.dummyledcontroller import DummyLEDController
 from ledcontrol.ledcontroller import LEDController
 from ledcontrol.previewgenerator import generate_preview
 
@@ -54,14 +55,15 @@ def create_app(led_count,
         print(f'Using default linear pixel mapping ({led_count} LEDs)')
         mapping_func = pixelmappings.line(led_count)
 
-    leds = DummyLEDController()
-
-    if not preview_mode:
+    if preview_mode:
+        leds = DummyLEDController()
+    else:
         leds = LEDController(led_count,
                              led_pin,
                              led_data_rate,
                              led_dma_channel,
                              led_pixel_order)
+
     controller = AnimationController(leds,
                                      refresh_rate,
                                      led_count,
