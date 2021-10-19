@@ -38,9 +38,6 @@ function handleInputChange(elem) {
     if (val === 1) elems.hide();
     else elems.show();
   }
-
-  // Generally always update the preview.
-  reloadPreview()
   return { key: key, value: val };
 }
 
@@ -51,7 +48,9 @@ function handleParamAdjust() {
 
 // When a slider is dropped or a number input is changed, set params
 function handleParamUpdate() {
-  $.getJSON('/setparam', handleInputChange($(this)), () => { });
+  $.getJSON('/setparam', handleInputChange($(this)), () => { }).after;
+  // Generally always update the preview.
+  reloadPreview()
 }
 
 // Reload the preview image, adding a dummy query tag to avoid browser caching.
