@@ -39,7 +39,7 @@ def main():
     parser.add_argument('--no_timer_reset', action='store_true',
                         help='Do not reset the animation timer when patterns are changed. Default: False')
     parser.add_argument('--preview_mode', action='store_true',
-                        help='Do not attempt to update a hardware LED strip. Instead, generate a preview image in the web interface. Default: False')
+                        help='Run in preview mode. Does not connect to any LEDs, and shows a preview in the web UI instead. Default: False')
     args = parser.parse_args()
 
     pixel_mapping = None

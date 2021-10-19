@@ -100,6 +100,8 @@ optional arguments:
   --sacn                Enable sACN / E1.31 support. Default: False
   --no_timer_reset      Do not reset the animation timer when patterns are
                         changed. Default: False
+  --preview_mode        Run in preview mode. Does not connect to any LEDs, and
+                        shows a preview in the web UI instead. Default: False
 ```
 
 ### Built-In Animation Patterns
