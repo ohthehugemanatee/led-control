@@ -132,15 +132,15 @@ def create_app(led_count,
         FormItem('colors'),
     ]
 
-    for item in form:
-        item.label = utils.snake_to_title(item.key)
-
     if enable_sacn:
         form.append(FormItem('select', 'sacn', int,
                              options=['Off', 'On'], label='E1.31 sACN Receiver Mode'))
 
     if preview_mode:
         form.append(FormItem('preview', 'preview'))
+
+    for item in form:
+        item.label = utils.snake_to_title(item.key)
 
     @app.route('/')
     def index():
