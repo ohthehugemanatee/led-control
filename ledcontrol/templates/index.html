@@ -113,7 +113,8 @@
         </div>
       </div>
       {% elif input.control == 'preview' %}
-      <div id="preview-container">
+      <div id="preview-container" data-id="{{ input.key }}">
+        <span class="label preview-label">{{ input.label }}:</span>
         <img src="/preview.gif" id="preview" style="max-width: 100%;" width="800">
       </div>
       {% endif %}
