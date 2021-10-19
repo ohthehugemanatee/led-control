@@ -56,7 +56,7 @@ def create_app(led_count,
 
     leds = None
 
-    if preview_mode == False:
+    if not preview_mode:
         leds = LEDController(led_count,
                              led_pin,
                              led_data_rate,
