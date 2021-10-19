@@ -137,7 +137,7 @@ def create_app(led_count,
                              options=['Off', 'On'], label='E1.31 sACN Receiver Mode'))
 
     if preview_mode:
-        form.append(FormItem('preview', 'preview'))
+        form.insert(6, FormItem('preview', 'preview'))
 
     for item in form:
         item.label = utils.snake_to_title(item.key)
