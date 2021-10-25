@@ -15,6 +15,7 @@ ColorMode = Enum('ColorMode', ['hsv', 'rgb'])
 def blank(t, dt, x, y, prev_state):
     return (0, 0, 0), ColorMode.hsv
 
+
 static_patterns = [0, 1] # pattern IDs that display a solid color
 
 default = {
@@ -379,6 +380,12 @@ def wipe_from_ends_1d(t, dt, x, y, z, prev_state, in_color):
     else:
         return in_color, ((t + x) % 1 < 0.5) * 1.0
 
+def fade_in(t, dt, x, y, z, prev_state, in_color):
+    return in_color, t / 600
+
+def fade_out(t, dt, x, y, z, prev_state, in_color):
+    return in_color, -1 * t / 600
+
 
 default_secondary = {
     0: None,
@@ -393,6 +400,8 @@ default_secondary = {
     9: wipe_across_1d,
     10: wipe_from_center_1d,
     11: wipe_from_ends_1d,
+    12: fade_in,
+    13: fade_out,
 }
 
 default_secondary_names = {
