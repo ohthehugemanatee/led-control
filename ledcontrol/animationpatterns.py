@@ -390,9 +390,6 @@ def fade_out(t, dt, x, y, z, prev_state, in_color):
         return in_color, 0
     return in_color, 1 - t / 5
 
-def outer_only(t, dt, x, y, z, prev_state, in_color):
-    if x > 0.333 or x < 0.667:
-        return in_color, 0
 
 default_secondary = {
     0: None,
@@ -409,7 +406,6 @@ default_secondary = {
     11: wipe_from_ends_1d,
     12: fade_in,
     13: fade_out,
-    14: outer_only,
 }
 
 default_secondary_names = {
