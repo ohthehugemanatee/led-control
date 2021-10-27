@@ -388,7 +388,7 @@ def fade_in(t, dt, x, y, z, prev_state, in_color):
 def fade_out(t, dt, x, y, z, prev_state, in_color):
     if t > 600:
         return in_color, 0
-    return in_color, 1 - t/600
+    return in_color, 1 - t / 600
 
 
 default_secondary = {
