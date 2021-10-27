@@ -381,14 +381,14 @@ def wipe_from_ends_1d(t, dt, x, y, z, prev_state, in_color):
         return in_color, ((t + x) % 1 < 0.5) * 1.0
 
 def fade_in(t, dt, x, y, z, prev_state, in_color):
-    if t > 600:
+    if t > 5:
         return in_color, 1
-    return in_color, t / 600
+    return in_color, t / 5
 
 def fade_out(t, dt, x, y, z, prev_state, in_color):
-    if t > 600:
+    if t > 5:
         return in_color, 0
-    return in_color, 1 - t / 600
+    return in_color, 1 - t / 5
 
 
 default_secondary = {
